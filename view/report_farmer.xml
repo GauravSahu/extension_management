@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="report_farmer_document">
+	<t t-call="report.external_layout">
+		<div class="page">
+			<div class="oe_structure"/>
+			 <div class="row">
+			 	<div class="col-xs-6">
+                    <p><b>Name</b>:<span t-field="o.name"/></p>
+                    <p t-if="o.phone_number"><b>Contact</b>:<span t-field="o.phone_number"/></p>
+                    <p t-if="o.email"><b>Email</b>:<span t-field="o.email"/></p>
+                    <p t-if="o.address"><b>Address</b>:<span t-field="o.address"/></p>
+                    <p t-if="o.date_of_birth"><b>Date of Birth</b>:<span t-field="o.date_of_birth"/></p>
+             		<p t-if="o.edu_qualification"><b>Educational Qualification</b>:<span t-field="o.edu_qualification"/></p>                        
+                </div>
+            </div>
+            <table class="table border table-condensed"><tr><td >
+             <div class="row" id="informations">
+             	<h3>Personal Information </h3><br></br>
+                <div t-if="o.country_id.name" class="col-xs-3">
+                    <strong>Country Name</strong>
+                    <p t-field="o.country_id.name"/>
+                    <strong>State Name</strong>
+                    <p t-field="o.state"/>
+                    <strong>District</strong>
+                    <p t-field="o.district"/>
+                </div>
+                <div t-if="o.gender" class="col-xs-3">
+                	<strong>Taluka</strong>
+                    <p t-field="o.taluka"/>
+                    <strong>Village</strong>
+                    <p t-field="o.village"/>
+                	<strong>Pin</strong>
+                    <p t-field="o.pin_code"/>
+                </div>
+                <div t-if="o.country_id.name" class="col-xs-3">
+                    <strong>Identification No:</strong>
+                    <p t-field="o.identification_id"/>
+                    <strong>Passport No:</strong>
+                    <p t-field="o.passport_id"/>
+                    <strong>Gender</strong>
+                    <p t-field="o.gender"/>                   
+                </div>
+                 <div t-if="o.country_id.name" class="col-xs-3">
+                    <strong>Marital Status </strong>
+                    <p t-field="o.marital"/>
+                </div>
+               
+            </div></td><td class="border-black">
+           </td>
+        </tr></table>
+        <table class="table border table-condensed"><tr><td >
+             <div t-if="o.farm_line" class="row" id="informations">
+             	<h3>Farm Information </h3><br></br>
+                <div  class="col-xs-3" >
+                    <strong>Plot Name</strong>
+                    <p t-field="o.farm_line.plot_name"/>
+                    <strong>Plot No:</strong>
+                    <p t-field="o.farm_line.plot_number"/>
+                    <strong>Area:</strong>
+                    <p t-field="o.farm_line.area"/>
+                </div>
+                <div t-if="o.farm_line.soil_line" class="col-xs-3">
+                    <strong>Soil Type</strong>
+                    <p t-field="o.farm_line.soil_line.type"/>
+                    <strong>Soil PH</strong>
+                    <p t-field="o.farm_line.soil_line.ph"/>
+                    <strong>Soil Color</strong>
+                    <p t-field="o.farm_line.soil_line.color"/>
+                </div>
+                 <div t-if="o.equipment_line" class="col-xs-3">
+                    <strong>Equipment Name</strong>
+                    <p t-field="o.equipment_line.equipment_name"/>
+                    <strong>Quantity</strong>
+                    <p t-field="o.equipment_line.quantity"/>
+                </div>
+              </div></td>
+        </tr></table>
+        <table class="table border table-condensed"><tr><td >
+             <div t-if="o.farm_line" class="row" id="informations">
+             	<h3>Cultivation Information </h3><br></br>
+                <div class="col-xs-3" >
+                    <strong>Plot Name</strong>
+                    <p t-field="o.farm_line.plot_name"/>
+                    <strong>Plot No:</strong>
+                    <p t-field="o.farm_line.plot_number"/>
+                    <strong>Area:</strong>
+                    <p t-field="o.farm_line.area"/>
+                </div>
+                <div t-if="o.farm_line.soil_line" class="col-xs-3">
+                    <strong>Soil Type</strong>
+                    <p t-field="o.farm_line.soil_line.type"/>
+                    <strong>Soil PH</strong>
+                    <p t-field="o.farm_line.soil_line.ph"/>
+                    <strong>Soil Color</strong>
+                    <p t-field="o.farm_line.soil_line.color"/>
+                </div>
+                 <div t-if="o.equipment_line" class="col-xs-3">
+                    <strong>Equipment Name</strong>
+                    <p t-field="o.equipment_line.equipment_name"/>
+                    <strong>Quantity</strong>
+                    <p t-field="o.equipment_line.quantity"/>
+                </div>
+              </div></td>
+        </tr></table>
+		</div>
+	</t>
+</template>
+
+<template id="report_farmer">
+	<t t-call="report.html_container">
+		<t t-foreach="doc_ids" t-as="doc_id">
+			<t t-raw="translate_doc(doc_id, doc_model, 'farmer_id.name', 'extension_management.report_farmer_document')"/>
+		</t>
+	</t>
+</template>
+</data>
+</openerp>

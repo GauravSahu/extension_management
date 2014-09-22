@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+   <record id="view_order_product_graph" model="ir.ui.view">
+         <field name="name">farmer.report.graph</field>
+         <field name="model">farmer.report</field>
+         <field name="arch" type="xml">
+             <graph string="Sales Analysis" type="pivot" stacked="True">
+                 <field name="name" type="row"/>
+                 <field name="create_date" interval="month" type="col"/>
+                 <field name="pin_code" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Custom reports (aka filters) -->
+    <record id="filter_farmer_yield" model="ir.filters">
+            <field name="name">Crop Yield</field>
+            <field name="model_id">farmer.report</field>
+            <field name="user_id" eval="False"/>
+            <field name="context">{'group_by': ['pin_code', 'name'], 'col_group_by': ['create_date'], 'measures': ['pin_code']}</field>
+    </record>
+
+    <record id="action_order_report_all" model="ir.actions.act_window">
+        <field name="name">Farmer Analysis</field>
+        <field name="res_model">farmer.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph</field>
+        
+        <field name="view_id" ref="view_order_product_graph"/>
+        <field name="context">{'search_default_Sales':1, 'group_by_no_leaf':1,'group_by':[]}</field>
+        <field name="help">This report performs analysis on your quotations and sales orders. Analysis check your sales revenues and sort it by different group criteria (salesman, partner, product, etc.) Use this report to perform analysis on sales not having invoiced yet. If you want to analyse your turnover, you should use the Invoice Analysis report in the Accounting application.</field>
+    </record>
+
+    <menuitem action="action_order_report_all" id="menu_report_product_all" parent="extension_management_item" sequence="10"/>
+
+</data>
+</openerp>

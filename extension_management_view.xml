@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+<!-- open meetings related to given partner -->    
+<!--============================================ Extension Managment ===========================================--> 
+     <record model="ir.ui.view" id="view_extension_management_form">
+        <field name="name">extension.management.form</field>
+        <field name="model">extension.management</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+          <form string="Extension Management">
+            <sheet>
+              <h1> <label string="Extension Worker" /></h1>
+              <newline/>
+              <newline/>
+              <div class="oe_title">
+                <group>
+                  <field name="worker_name" select="1" placeholder="Name"/>
+                </group>
+              </div>
+              <newline/>
+              <newline/>
+              <notebook>
+                <page string="Add Farmer">
+                  <separator string="Add Worker"/>
+                    <field name="farmer_line" colspan="4" string="Add Farmer" nolabel="1">
+                      <form string="Farmer Details" version="7.0">
+                        <sheet>
+                          <group>
+                            <field name="farmer_id"/>
+                          </group>
+                        </sheet>
+                      </form>
+                    <tree string="Farmer Details">
+                        <field name="farmer_id"/>
+                    </tree>
+                  </field>  
+                </page>
+               
+                            
+                <page string="Meeting Detail">
+                  <separator string="Meeting Detail"/>
+                    <field name="meeting_line" colspan="4" string="Meeting Detail" nolabel="1">
+                  <form string="Farmer Meeting">
+                <sheet>
+                   <h1> <label string="Farmer Meeting" /></h1>
+                    <group>
+                      <field name="subject" select="1" placeholder="Name"/>
+                      <field name="date" select="2" placeholder="Date"/>
+                      <field name="location" select="3" placeholder="Location" />
+                      <field name="duration" select="4" placeholder="Duration" />
+                    </group>
+                    <newline/>
+                 <newline/>
+                 <notebook>
+                  <page string="Meeting Purpose ">
+                      <group>
+                          <field name="meeting_purpose" />
+                      </group>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+                    <page string="Meeting Details">
+                      <group>
+                          <field name="start_time"/>
+                          <field name="end_time" />
+                          <field name="all_day"/>
+                      </group>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+                   
+
+                 </notebook>
+                    
+               </sheet>
+            </form>
+            <tree string="Farmer Meeting">              
+                <field name="subject"/>
+                  <field name="date" />
+                  <field name="location"  />
+                  <field name="duration"  />
+            </tree>
+                                
+                             </field>
+
+
+                </page>
+                    </notebook>
+               </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_extension_management_tree">
+        <field name="name">extension.management.tree</field>
+        <field name="model">extension.management</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Extension Management">              
+                <field name="worker_name"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_extension_management">
+        <field name="name">extension.management</field>
+        <field name="res_model">extension.management</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+  <menuitem name="Extension Management" id="extension_management" />
+  <menuitem name="Extension Management" id="extension_management_item" parent="extension_management"/>
+  <menuitem name="Extension Worker" id="extension_worker" parent="extension_management_item" action="action_extension_management"/>
+ 
+
+<!--============================================ Farmer =============================================-->
+  
+       <record model="ir.ui.view" id="view_farmer_detail_form">
+        <field name="name">farmer.detail.form</field>
+        <field name="model">farmer.detail</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Farmer Detail">
+            
+                  <header>
+                    <button name="print_quotation" string="Print" type="object"  class="oe_highlight" />
+                    
+                     <field name="state" widget="statusbar" statusbar_visible="New,open,confirm,cancel"/>
+                 </header>
+            
+                <sheet>
+                 
+                   
+                    <field name="image" widget='image' class="oe_left oe_avatar"/>
+                    <div class="oe_title">
+                      <h1>
+                        <field name="name" select="1" placeholder="Name"/>
+                      </h1>
+                       <label for="phone_number" class="oe_edit_only"/>
+                      <field name="phone_number" select="2" placeholder="Phone Number"/>
+                       <label for="email" class="oe_edit_only"/>
+                      <field name="email" select="2" placeholder="Email"/>
+                       <label for="address" class="oe_edit_only"/>
+                      <field name="address" select="2" placeholder="Address"/>
+                  
+                  </div>
+                    <newline/>
+                
+                    <notebook>
+                      <page string="Personal Detail">
+                        <group>
+                          <group string="Citizenship &amp; Other Info">
+                              <field name="country_id"/>
+                              <field name="identification_id" />
+                              <field name="passport_id" />
+                              <field name="bank_account_id"/>
+                          </group>
+                          <group string="Status">
+                              <field name="gender"/>
+                              <field name="marital"/>
+                          </group>
+                          <group string="Education Qualification">
+                              <field name="date_of_birth"/>
+                              <field name="edu_qualification"/>
+                          </group>
+                        </group>
+                      </page>
+                      <page string="Contact Detail">
+                           <separator string="Contact Detail"/>
+                          <group>
+                              <group>
+                                  <field name="village" />
+                                   <field name="district" />
+                                     <field name="pin_code" />
+                              </group>
+                              <group>
+                                  <field name="state" />
+                                   <field name="taluka" />
+                              </group>
+                          </group>
+                      </page>
+                      <page string="Farm Detail">
+                          <separator string="Farm Detail"/>
+                          <field name="farm_line" colspan="4" string="Farm Detail" nolabel="1">
+                             <form string="Farm Detail" version="7.0">
+                              <sheet>
+                                <div class="oe_title">
+                                  <h1>
+                                    <label string="Plot Details" />
+                                  </h1>  
+                                </div>
+                                <newline/>
+                                <newline/>
+                                <group>
+                                    <field name="plot_number" class="oe_inline"/>
+                                    <field name="area" class="oe_inline"/>
+                                    <field name="location" class="oe_inline"/>
+                                    <field name="gis" class="oe_inline"/>
+                                    <field name="land_category_id" class="oe_inline"/>
+                                    <field name="farmer_id"/>
+                                </group>
+                                  <group colspan="2" col="2">
+                                    <field name="des"/>
+                                 </group>
+                              </sheet>
+                        </form>
+                        <tree string="Farm Details">
+                                <field name="plot_number"/>
+                                <field name="area"/>
+                                <field name="location"/>
+                        </tree>
+                    </field>
+                        </page>
+<page string="Equipment Detail">
+                          <separator string="Equipment Detail"/>
+                          <field name="equipment_line" colspan="4" string="Equipment Detail" nolabel="1">
+                             <form string="Equipment Detail" version="7.0">
+                              <sheet>
+                                <div class="oe_title">
+                                  <h1>
+                                    <label string="Equipment Details" />
+                                  </h1>  
+                                </div>
+                                <newline/>
+                                <newline/>
+                                <group>
+                                    <field name="equipment_name" class="oe_inline"/>
+                                    <field name="quantity" class="oe_inline"/>
+                                   
+                                </group>
+                                 
+                              </sheet>
+                        </form>
+                        <tree string="Farm Details">
+                                <field name="equipment_name"/>
+                                <field name="quantity"/>
+                               
+                        </tree>
+                    </field>
+                        </page>
+
+                        <page string="Livestock Detail">
+                          <separator string="livestock Detail"/>
+                          <field name="livestock_line" colspan="4" string="Livestock Detail" nolabel="1">
+                             <form string="Livestock Detail" version="7.0">
+                              <sheet>
+                                <div class="oe_title">
+                                  <h1>
+                                    <label string="Livestock Details" />
+                                  </h1>  
+                                </div>
+                                <newline/>
+                                <newline/>
+                                <group>
+                                    <field name="cattle_name" class="oe_inline"/>
+                                    <field name="cattle_qty" class="oe_inline"/>
+                                   
+                                </group>
+                                 
+                              </sheet>
+                        </form>
+                        <tree string="Farm Details">
+                                <field name="cattle_name"/>
+                                <field name="cattle_qty"/>
+                               
+                        </tree>
+                    </field>
+                        </page>
+                        
+                          <page string="Meeting Detail">
+                             <separator string="Meeting Detail"/>
+                             <field name="meeting_line" colspan="4" string="Meeting Detail" nolabel="1">
+                                <form string="Farmer Meeting">
+                <sheet>
+                   <h1> <label string="Farmer Meeting" /></h1>
+                    <group>
+                      <field name="subject" select="1" placeholder="Name"/>
+                      <field name="date" select="2" placeholder="Date"/>
+                      <field name="location" select="3" placeholder="Location" />
+                      <field name="duration" select="4" placeholder="Duration" />
+                    </group>
+                    <newline/>
+                 <newline/>
+                 <notebook>
+                  <page string="Meeting Purpose ">
+                      <group>
+                          <field name="meeting_purpose" />
+                      </group>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+                    <page string="Meeting Details">
+                      <group>
+                          <field name="start_time"/>
+                          <field name="end_time" />
+                          <field name="all_day"/>
+                      </group>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+                   
+
+                 </notebook>
+                    
+               </sheet>
+            </form>
+            <tree string="Farmer Meeting">              
+                <field name="subject"/>
+                  <field name="date" />
+                  <field name="location"  />
+                  <field name="duration"  />
+            </tree>
+                                
+                             </field>
+                        </page>
+                    </notebook>
+               </sheet>
+            </form>
+        </field>
+    </record>
+     <record model="ir.ui.view" id="view_sale_order_graph">
+            <field name="name">farmer.detail.graph</field>
+            <field name="model">farmer.detail</field>
+            <field name="arch" type="xml">
+                <graph string="Farmer Detail" type="bar">
+                    <field name="name" type="row"/>
+                    <field name="pin_code" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+    <record id="view_sale_order_calendar" model="ir.ui.view">
+            <field name="name">farmer.detail.calendar</field>
+            <field name="model">farmer.detail</field>
+            <field name="arch" type="xml">
+                <calendar string="Farmer" color="state" date_start="create_date">
+                     <field name="name"/>
+                    <field name="pin_code"/>
+                </calendar>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="view_farmer_detail_tree">
+        <field name="name">farmer.detail.tree</field>
+        <field name="model">farmer.detail</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Farmer Detail">              
+                <field name="name"/>
+                <field name="phone_number"/>
+                <field name="email"/>
+                <field name="address"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_farmer_detail">
+        <field name="name">farmer.detail</field>
+        <field name="res_model">farmer.detail</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph,calendar</field>
+    </record>
+   <menuitem name="Farmer Detail" id="menu_farmer_item" parent="extension_management_item" action="action_farmer_detail"/>
+    
+
+  <!--============================================ Farmer Meeting =============================================-->
+  
+       <record model="ir.ui.view" id="view_farmer_meeting_form">
+        <field name="name">farmer.meeting.form</field>
+        <field name="model">farmer.meeting</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Farmer Meeting">
+                <sheet>
+                   <h1> <label string="Farmer Meeting" /></h1>
+                    <group>
+                      <field name="subject" select="1" placeholder="Name"/>
+                      <field name="date" select="2" placeholder="Date"/>
+                      <field name="location" select="3" placeholder="Location" />
+                      <field name="duration" select="4" placeholder="Duration" />
+                    </group>
+                    <newline/>
+                 <newline/>
+                 <notebook>
+                  <page string="Meeting Purpose ">
+                      <group>
+                          <field name="meeting_purpose" />
+                      </group>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+                    <page string="Meeting Details">
+                      <group>
+                          <field name="start_time"/>
+                          <field name="end_time" />
+                          <field name="all_day"/>
+                      </group>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+                    <page string="Meeting Participants">
+                      <separator string="Meeting Participants"/>
+                          <field name="farmer_line" colspan="4" string="Meeting Participants" nolabel="1">
+                             <form string="Meeting Participants" version="7.0">
+                              <sheet>
+                                  
+                                  <group>
+                                      <field name="name"/>
+
+                                      <field name="address"/>
+                                  </group>
+                              </sheet>
+                        </form>
+                        <tree string="Farmer Details">
+                                <field name="name"/>
+                                <field name="address"/>
+                        </tree>
+                    </field>
+                      
+                      <group>
+                            <field name="description" />
+                      </group>
+                    </page>
+
+                 </notebook>
+                    
+               </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_farmer_meeting_tree">
+        <field name="name">farmer.meeting.tree</field>
+        <field name="model">farmer.meeting</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Farmer Meeting">              
+                <field name="subject"/>
+                  <field name="date" />
+                  <field name="location"  />
+                  <field name="duration"  />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_farmer_meeting">
+        <field name="name">farmer.meeting</field>
+        <field name="res_model">farmer.meeting</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    
+  </data>
+</openerp>

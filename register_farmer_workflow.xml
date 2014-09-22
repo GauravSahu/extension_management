@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record model="workflow" id="wkf_travel_booking">
+			<field name="name">farmer.detail.basic</field>
+			<field name="osv">farmer.detail</field>
+			<field name="on_create">True</field>
+		</record>
+	
+	    #----------------------------------------------
+	    # Activity
+	    #----------------------------------------------
+	
+		<record model="workflow.activity" id="act_New">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="flow_start">True</field>
+			<field name="name">New</field>
+		</record>
+						
+		<record model="workflow.activity" id="act_open">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="name">open</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'open'})</field>
+		</record>
+
+		<record model="workflow.activity" id="act_cancel">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="name">cancel</field>
+			<field name="flow_stop">True</field>
+			<field name="kind">stopall</field>
+			<field name="action">write({'state':'cancel'})</field>
+		</record>
+
+		<record model="workflow.activity" id="act_confirm">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="name">confirm</field>
+			<field name="flow_stop">True</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'confirm'})</field>
+		</record>
+
+		<record model="workflow.activity" id="act_request">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="flow_start">True</field>
+			<field name="name">requested</field>
+		</record>
+
+		<record model="workflow.activity" id="act_confirmed">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="name">confirmed</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'Confirmed'})</field>
+		</record>
+
+		<record model="workflow.activity" id="act_finalized">
+			<field name="wkf_id" ref="wkf_travel_booking"/>
+			<field name="name">finalized</field>
+			<field name="flow_stop">True</field>
+			<field name="kind">stopall</field>
+			<field name="action">write({'state':'finalized'})</field>
+		</record>
+		
+		
+	       #----------------------------------------------
+	       # Transistion
+	       #----------------------------------------------
+	
+		<record model="workflow.transition" id="t1">
+			<field name="act_from" ref="act_New"/>
+			<field name="act_to" ref="act_open"/>
+			<field name="signal">New_open</field>
+		</record>
+
+		<record model="workflow.transition" id="t2">
+			<field name="act_from" ref="act_open"/>
+			<field name="act_to" ref="act_cancel"/>
+			<field name="signal">open_cancel</field>
+		</record>
+
+		<record model="workflow.transition" id="t3">
+			<field name="act_from" ref="act_open"/>
+			<field name="act_to" ref="act_confirm"/>
+			<field name="signal">open_confirm</field>
+		</record>
+
+
+		<!--=======================================================
+		               Confirmation of hotels
+		==========================================================-->
+
+        <record model="workflow.transition" id="c1">
+			<field name="act_from" ref="act_open"/>
+			<field name="act_to" ref="act_request"/>
+			<field name="signal">open_request</field>
+		</record>
+
+        <record model="workflow.transition" id="c2">
+		    <field name="act_from" ref="act_request"/>
+		    <field name="act_to" ref="act_confirmed"/>
+		    <field name="signal">request_confirmed</field>
+		</record>
+
+		<record model="workflow.transition" id="c4">
+			<field name="act_from" ref="act_request"/>
+			<field name="act_to" ref="act_cancel"/>
+			<field name="signal">request_cancel</field>
+		</record>
+
+		<record model="workflow.transition" id="c3">
+			<field name="act_from" ref="act_confirmed"/>
+			<field name="act_to" ref="act_finalized"/>
+			<field name="signal">confirmed_finalized</field>
+		</record>
+
+		
+	</data>
+</openerp>

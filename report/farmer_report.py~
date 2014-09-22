@@ -1,0 +1,9 @@
+from openerp import tools
+from openerp.osv import fields, osv
+
+farmer_report(osv.Model):
+	_name = 'farmer.report'
+	_columns = {
+		
+	}
+farmer_report()
